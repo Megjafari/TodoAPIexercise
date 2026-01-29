@@ -1,0 +1,63 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using TodoAPIexercise.Models;
+using TodoAPIexercise.Services;
+
+
+namespace TodoAPIexercise.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ItemsController : ControllerBase
+    {
+        private readonly ItemsService? _itemsService;
+
+        public ItemsController(ItemsService itemsService)
+        {
+            _itemsService = itemsService;
+        }
+
+        //GET ALL
+        [HttpGet]
+        public ActionResult<TodoItem> GetById(int id)
+        {
+            var item = _itemsService?.GetById(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return Ok(item);
+        }
+
+        //POST (CREATE)
+        [HttpPost]
+        public ActionResult<TodoItem> Create(TodoItem newItem)
+        {
+            var createdItem = _itemsService?.Create(newItem);
+            return CreatedAtAction(nameof(GetById), new { id = createdItem?.Id }, createdItem);
+        }
+
+        //PUT (UPDATE)
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, TodoItem updatedItem)
+        {
+            var success = _itemsService?.Update(id, updatedItem);
+            if (success == false)
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
+
+        //DELETE
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var success = _itemsService?.Delete(id);
+            if (success == false)
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
+    }
+}
