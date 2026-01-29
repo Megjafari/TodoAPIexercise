@@ -2,61 +2,58 @@
 using TodoAPIexercise.Models;
 using TodoAPIexercise.Services;
 
-
-namespace TodoAPIexercise.Controllers
+namespace TodoApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class ItemsController : ControllerBase
     {
-        private readonly ItemsService? _itemsService;
+        private readonly ItemsService _itemsService;
 
         public ItemsController(ItemsService itemsService)
         {
             _itemsService = itemsService;
         }
 
-        //GET ALL
+        // GET ALL
         [HttpGet]
+        public ActionResult<List<TodoItem>> GetAll()
+        {
+            return Ok(_itemsService.GetAll());
+        }
+
+        // GET BY ID
+        [HttpGet("{id}")]
         public ActionResult<TodoItem> GetById(int id)
         {
-            var item = _itemsService?.GetById(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
+            var item = _itemsService.GetById(id);
+            if (item == null) return NotFound();
             return Ok(item);
         }
 
-        //POST (CREATE)
+        // POST (CREATE)
         [HttpPost]
         public ActionResult<TodoItem> Create(TodoItem newItem)
         {
-            var createdItem = _itemsService?.Create(newItem);
-            return CreatedAtAction(nameof(GetById), new { id = createdItem?.Id }, createdItem);
+            var created = _itemsService.Create(newItem);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
-        //PUT (UPDATE)
+        // PUT (UPDATE)
         [HttpPut("{id}")]
         public IActionResult Update(int id, TodoItem updatedItem)
         {
-            var success = _itemsService?.Update(id, updatedItem);
-            if (success == false)
-            {
-                return NotFound();
-            }
+            var success = _itemsService.Update(id, updatedItem);
+            if (!success) return NotFound();
             return NoContent();
         }
 
-        //DELETE
+        // DELETE
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var success = _itemsService?.Delete(id);
-            if (success == false)
-            {
-                return NotFound();
-            }
+            var success = _itemsService.Delete(id);
+            if (!success) return NotFound();
             return NoContent();
         }
     }
