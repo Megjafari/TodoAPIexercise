@@ -24,6 +24,18 @@ namespace TodoAPIexercise
                                     .AllowAnyHeader());
             });
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://127.0.0.1:5500", "http://localhost:7158")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                    });
+            });
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -32,7 +44,7 @@ namespace TodoAPIexercise
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            app.UseCors("AllowAll");
+            app.UseCors("AllowFrontend");
 
             app.UseHttpsRedirection();
             app.UseAuthorization();

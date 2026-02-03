@@ -89,7 +89,14 @@ li span {
 .done {
     text-decoration: line-through;
     color: gray;
+    opacity: 0.5;
 }
+
+.done-btn {
+    background-color: #28a745;
+    color: white;
+}
+
 
 /* Buttons inside each todo */
 .action-buttons button {

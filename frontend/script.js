@@ -20,7 +20,7 @@ async function loadTodos() {
         // Markera klar
         const doneBtn = document.createElement("button");
         doneBtn.textContent = "✔";
-        doneBtn.className = "done";
+        doneBtn.className = "done-btn";
         doneBtn.onclick = () => toggleDone(todo);
 
         // Redigera
@@ -64,13 +64,23 @@ async function deleteTodo(id) {
 }
 
 async function toggleDone(todo) {
-    await fetch(`${apiUrl}/${todo.id}`, {
+    console.log("Before toggle:", todo);
+
+    const response = await fetch(`${apiUrl}/${todo.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: todo.id, title: todo.title, isDone: !todo.isDone })
+        body: JSON.stringify({
+            id: todo.id,
+            title: todo.title,
+            isDone: !todo.isDone
+        })
     });
-    loadTodos();
+
+    console.log("PUT status:", response.status);
+
+    await loadTodos();
 }
+
 
 function editTodo(todo) {
     const newTitle = prompt("Edit title:", todo.title);

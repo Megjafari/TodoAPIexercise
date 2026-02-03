@@ -43,10 +43,16 @@ namespace TodoApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(int id, TodoItem updatedItem)
         {
-            var success = _itemsService.Update(id, updatedItem);
-            if (!success) return NotFound();
-            return NoContent();
+            var existingItem = _itemsService.GetById(id);
+
+            if (existingItem == null)
+                return NotFound();
+
+            _itemsService.Update(id, updatedItem);
+
+            return NoContent(); // 204 success
         }
+
 
         // DELETE
         [HttpDelete("{id}")]

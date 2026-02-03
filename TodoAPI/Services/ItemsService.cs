@@ -25,15 +25,16 @@ namespace TodoAPIexercise.Services
         }
 
         //Update
-        public bool Update(int id, TodoItem updatedItem)
+        public void Update(int id, TodoItem updatedItem)
         {
-            var existing = GetById(id);
-            if (existing == null) return false;
-
-            existing.Title = updatedItem.Title;
-            existing.IsCompleted = updatedItem.IsCompleted;
-            return true;
+            var item = _items.FirstOrDefault(x => x.Id == id);
+            if (item != null)
+            {
+                item.Title = updatedItem.Title;
+                item.IsCompleted = updatedItem.IsCompleted;  // <-- uppdatera done-status
+            }
         }
+
 
         //Delete
         public bool Delete(int id)
