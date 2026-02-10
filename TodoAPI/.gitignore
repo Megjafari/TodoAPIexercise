@@ -1,0 +1,20 @@
+# Build
+bin/
+obj/
+
+# User files
+*.user
+*.suo
+
+# VS Code
+.vscode/
+
+# EF Core Migrations (om du vill ignorera dem)
+Migrations/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
