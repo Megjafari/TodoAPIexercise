@@ -1,16 +1,17 @@
 # Todo Manager App
 
-A simple Todo app built with **ASP.NET Core Web API** for the backend and **HTML/JS/CSS** for the frontend.  
+A simple Todo application built with **ASP.NET Core Web API** for the backend and **HTML/JS/CSS** for the frontend.  
+It allows users to create, read, update, and delete Todos with a modern and responsive interface. Each Todo has a unique ID and can be marked as done, edited, or removed.
 
 ---
 
 ## Features
 
-- List all Todos with ID  
-- Add new Todos  
-- Mark Todos as done / undone  
-- Edit Todos  
-- Delete Todos  
+- Full CRUD API for Todos  
+- SQL Server database using Entity Framework Core  
+- CORS enabled for local frontend  
+- Swagger UI for API testing  
+- Simple static frontend with interactive UI 
 
 ---
 
